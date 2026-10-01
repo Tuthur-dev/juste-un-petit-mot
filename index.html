@@ -1,9 +1,760 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title></title>
-  </head>
-  <body>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Juste un petit mot, Ashley</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    overflow: hidden;
+    color: white;
+
+    background:
+        radial-gradient(circle at 20% 20%, #ff6fae33, transparent 30%),
+        radial-gradient(circle at 80% 80%, #806cff33, transparent 30%),
+        linear-gradient(135deg, #090914, #181329);
+}
+
+
+/* ÉTOILES */
+
+.star {
+    position: fixed;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    opacity: .5;
+
+    animation: blink 3s infinite;
+}
+
+@keyframes blink {
+
+    50% {
+        opacity: .1;
+        transform: scale(.5);
+    }
+
+}
+
+
+/* ÉCRANS */
+
+.screen {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+}
+
+
+/* écran actuellement affiché */
+
+.screen.active {
+
+    display: flex;
+
+}
+
+
+/* CARTE */
+
+.card {
+
+    width: min(650px, 100%);
+
+    padding: 45px 30px;
+
+    text-align: center;
+
+    border-radius: 30px;
+
+    background: rgba(255,255,255,.08);
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 20px 80px rgba(0,0,0,.5);
+
+    animation: appear .7s ease;
+
+}
+
+
+@keyframes appear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(30px)
+            scale(.95);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* TEXTES */
+
+.badge {
+
+    color: #ff9dcc;
+
+    font-size: 13px;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 20px;
+
+}
+
+
+h1 {
+
+    font-size: clamp(35px, 8vw, 70px);
+
+    margin: 0 0 20px;
+
+}
+
+
+h2 {
+
+    font-size: clamp(28px, 6vw, 45px);
+
+    margin: 0 0 20px;
+
+}
+
+
+p {
+
+    color: #ddd9e8;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    max-width: 550px;
+
+    margin: 15px auto;
+
+}
+
+
+/* TEXTAREA */
+
+textarea {
+    width: 100%;
+    border-radius: 15px;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 16px;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+textarea:focus {
+    border-color: #ff5fa2;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 15px rgba(255, 95, 162, 0.3), inset 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* BOUTONS */
+
+button {
+    position: relative;
+    z-index: 10;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 15px 25px;
+    margin: 12px 5px;
+    border-radius: 999px;
+    cursor: pointer;
+    background:
+        linear-gradient(
+            135deg,
+            #ff5fa2,
+            #8d72ff
+        );
+    box-shadow:
+        0 10px 30px #ff5fa233;
+    transition: .2s;
+}
+
+
+button:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 15px 40px #ff5fa255;
+
+}
+
+
+button:active {
+
+    transform: scale(.95);
+
+}
+
+
+/* BOUTON NON */
+
+.no {
+
+    background: rgba(255,255,255,.1);
+
+    box-shadow: none;
+
+}
+
+
+/* EMOJI */
+
+.emoji {
+
+    font-size: 65px;
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    animation: floating 2.5s infinite;
+
+}
+
+
+@keyframes floating {
+
+    50% {
+
+        transform:
+            translateY(-10px)
+            rotate(4deg);
+
+    }
+
+}
+
+
+/* BARRE */
+
+.progress {
+
+    position: fixed;
+
+    bottom: 20px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 250px;
+
+    max-width: 70%;
+
+    height: 4px;
+
+    background: #ffffff20;
+
+    border-radius: 10px;
+
+}
+
+
+#progressBar {
+
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff5fa2,
+            #8d72ff
+        );
+
+    transition: .5s;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- LES ÉTOILES -->
+
+<div id="stars"></div>
+
+
+<!-- ÉCRAN 1 -->
+
+<section class="screen active">
+
+    <div class="card">
+
+        <div class="badge">
+            Ashley,
+        </div>
+
+        <h1 id="typing"></h1>
+
+        <p>
+            Promis, ça ne prend que quelques secondes. 👀
+        </p>
+
+        <button onclick="nextScreen()">
+            Vas-y ✨
+        </button>
+
+        <button
+            class="no"
+            id="lazyButton"
+            onclick="runAway('lazyButton')"
+            onmouseover="runAway('lazyButton')"
+        >
+            La flemme... 😮‍💨
+        </button>
+
+    </div>
+
+</section>
+
+<section class="screen">
+
+    <div class="card">
+
+        <span class="emoji">
+            🤔
+        </span>
+
+        <h2>
+            Alors
+        </h2>
+
+        <p>
+            Comment vas-tu ?
+        </p>
+
+        <button onclick="nextScreen()">
+            Bien merci 😊
+        </button>
+        <button
+            class="no"
+            id="notGoodButton"
+            onclick="runAway('notGoodButton')"
+            onmouseover="runAway('notGoodButton')"> Bof ou pas 😠</button>
+        <p id="notGoodMessage"></p>
+    </div>
+
+</section>
+
+<!-- ÉCRAN 2 -->
+
+<section class="screen">
+
+    <div class="card">
+
+        <span class="emoji">
+            😞
+        </span>
+
+        <h2>
+            Donc...
+        </h2>
+
+        <p>
+            Ça fait plusieurs jours -voir semaines-,
+            que j'aimerais te parler. <br>
+            Mais mon stress en a décidé autrement. 😢 <br>
+            Dès qu'une occasion se présente, mon stress ne rate jamais son apparation... 
+        </p>
+
+        <button onclick="nextScreen()">
+            Continuer →
+        </button>
+
+    </div>
+
+</section>
+
+
+<section class="screen">
+
+    <div class="card">
+
+        <span class="emoji">
+            🙂
+        </span>
+
+        <h2>
+            Alors,
+        </h2>
+
+        <p>
+            Quel conseil me donnerais-tu pour que je puisse enfin te parler ?
+        </p><br>
+        <textarea
+            id="advice"
+            placeholder="Écris ton conseil ici..."
+            rows="4"></textarea>
+
+        <button onclick="sayYes()">
+            Confirmer 😊
+        </button>
+
+        <button
+            class="no"
+            id="laterButton"
+            onclick="runAway('laterButton')"
+            onmouseover="runAway('laterButton')"
+        >
+            Pas maintenant
+        </button>
+
+        <p style="font-size:13px;color:#aaa">
+            Aucune pression, vraiment.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ÉCRAN FINAL -->
+
+<section class="screen">
+
+    <div class="card">
+
+        <span class="emoji">
+            ✨
+        </span>
+
+        <h2>
+            Ça me fait plaisir !
+        </h2>
+
+        <p>
+            Merci d'avoir pris de ton temps pour me répondre !
+
+            <p style="font-size: 12px;">Sache que cette petit animation a été réalisé avec plaisir et avec beaucoup de temps, <br>j'éspère qu'elle t'as plut !</p>
+
+            Maintenant, je crois bien que je n'ai plus d'excuse pour ne pas te parler la prochaine fois que je te verrais. 😁
+        </p>
+
+        <button onclick="restart()">
+            Recommencer ↻
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- BARRE -->
+
+<div class="progress">
+
+    <div id="progressBar"></div>
+
+</div>
+
+
+
+<script>
+
+
+/* RÉCUPÉRATION DES ÉCRANS */
+
+const screens =
+    document.querySelectorAll(".screen");
+
+
+let currentScreen = 0;
+
+
+
+/* PASSER À L'ÉCRAN SUIVANT */
+
+function nextScreen() {
+
+    screens[currentScreen]
+        .classList.remove("active");
+
+
+    currentScreen++;
+
+
+    if (currentScreen >= screens.length) {
+
+        currentScreen = screens.length - 1;
+
+    }
+
+
+    screens[currentScreen]
+        .classList.add("active");
+
+
+    updateProgress();
+
+}
+
+
+
+/* PROGRESSION */
+
+function updateProgress() {
+
+    const percentage =
+        (currentScreen /
+        (screens.length - 1)) * 100;
+
+
+    document.getElementById("progressBar")
+        .style.width = percentage + "%";
+
+}
+
+
+
+/* BOUTON OUI */
+
+function sayYes() {
+
+    // 1. Récupérer le texte
+    const message = document.getElementById("advice").value;
     
-  </body>
+    // /!\ REMPLACE PAR TON NUMÉRO ICI (Code pays + numéro sans le premier 0)
+    // Exemple pour un 06 12 34 56 78 en France : "33612345678"
+    const numero = "33600000000"; 
+
+    if (message.trim() !== "") {
+        // 2. Détecter si c'est un mobile ou un ordinateur
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        let lienWhatsApp;
+        if (isMobile) {
+            // Lien pour ouvrir l'application mobile
+            lienWhatsApp = `https://wa.me/${numero}?text=${encodeURIComponent(message)}`;
+        } else {
+            // Lien pour forcer WhatsApp Web sur ordinateur
+            lienWhatsApp = `https://web.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(message)}`;
+        }
+
+        // 3. Ouvrir WhatsApp dans un nouvel onglet
+        window.open(lienWhatsApp, '_blank');
+    }
+
+    currentScreen = 4;
+
+    screens.forEach(screen => {
+
+        screen.classList.remove("active");
+
+    });
+
+    screens[4].classList.add("active");
+
+    updateProgress();
+
+}
+
+
+
+/* RECOMMENCER */
+
+function restart() {
+
+    screens[currentScreen]
+        .classList.remove("active");
+
+    currentScreen = 0;
+
+    screens[0]
+        .classList.add("active");
+
+    updateProgress();
+
+}
+
+
+
+/* BOUTON QUI S'ENFUIT */
+
+function runAway(id) {
+
+    const button =
+        document.getElementById(id);
+
+
+    const x =
+        Math.random() * 250 - 125;
+
+
+    const y =
+        Math.random() * 150 - 75;
+
+
+    button.style.transform =
+        `translate(${x}px, ${y}px)`;
+
+    if (id === "notGoodButton"){
+        document.getElementById("notGoodMessage").innerHTML = "Tu n'as pas le droit d'aller mal !!!";
+    }
+
+}
+
+
+
+/* TEXTE QUI S'ÉCRIT */
+
+const text =
+    "J'ai un truc à te dire...";
+
+
+const typing =
+    document.getElementById("typing");
+
+
+let letter = 0;
+
+
+function typeWriter() {
+
+    if (letter < text.length) {
+
+        typing.innerHTML +=
+            text[letter];
+
+        letter++;
+
+        setTimeout(
+            typeWriter,
+            55
+        );
+
+    }
+
+}
+
+
+typeWriter();
+
+
+
+/* ÉTOILES */
+
+for (let i = 0; i < 50; i++) {
+
+    const star =
+        document.createElement("div");
+
+
+    star.className = "star";
+
+
+    star.style.left =
+        Math.random() * 100 + "%";
+
+
+    star.style.top =
+        Math.random() * 100 + "%";
+
+
+    star.style.animationDelay =
+        Math.random() * 3 + "s";
+
+
+    document
+        .getElementById("stars")
+        .appendChild(star);
+
+}
+function sayYes() {
+    const message = document.getElementById("advice").value;
+    const numero = "+33743030255";
+    const lienWhatsApp = `https://wa.me/${numero}?text=${encodeURIComponent(message)}`;
+    
+    window.open(lienWhatsApp, '_blank');
+    currentScreen = 4;
+    screens.forEach(screen => {
+        screen.classList.remove("active");
+    });
+    screens[4].classList.add("active");
+    updateProgress();
+}
+
+</script>
+
+</body>
+
 </html>
